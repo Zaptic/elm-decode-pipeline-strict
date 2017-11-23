@@ -1,7 +1,7 @@
 {
-    "version": "3.0.0",
-    "summary": "A pipeline-friendly library for building JSON decoders.",
-    "repository": "https://github.com/NoRedInk/elm-decode-pipeline.git",
+    "version": "1.0.0",
+    "summary": "A strict version of elm-decode-pipeline",
+    "repository": "https://github.com/zaptic/elm-decode-pipeline-strict.git",
     "license": "BSD-3-Clause",
     "source-directories": [
         "src"
