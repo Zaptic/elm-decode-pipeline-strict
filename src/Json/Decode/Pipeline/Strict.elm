@@ -344,14 +344,30 @@ decode constructor =
             )
 
 
+type Mode
+    = Strict
+    | NonStrict
+
+
+endAs : Mode -> Decoder (DecodeData a) -> Decoder a
+endAs mode =
+    case mode of
+        Strict ->
+            Decode.andThen
+                (\data ->
+                    if Set.isEmpty data.keys then
+                        Decode.succeed data.value
+                    else
+                        Decode.fail (data.keys |> Set.toList |> String.join " ")
+                )
+
+        NonStrict ->
+            Decode.andThen
+                (\data -> Decode.succeed data.value)
+
+
 {-| End your decode pipeline
 -}
 end : Decoder (DecodeData a) -> Decoder a
 end =
-    Decode.andThen
-        (\data ->
-            if Set.isEmpty data.keys then
-                Decode.succeed data.value
-            else
-                Decode.fail (data.keys |> Set.toList |> String.join " ")
-        )
+    endAs Strict
